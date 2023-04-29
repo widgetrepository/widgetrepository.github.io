@@ -1,0 +1,22 @@
+.swidget-modal
+{
+    overflow: hidden;
+}
+.swidget-modal-dialog{
+    margin-right: 0;
+    margin-left: 0;
+}
+.swidget-modeless{
+    top:10%;
+    left:50%;
+    bottom:auto;
+    right:auto;
+    margin-left:-300px;
+}
+
+.widget-context{
+  width: 100%; 
+  margin: 15; 
+  padding: 10; 
+  border-width: 0; 
+}
