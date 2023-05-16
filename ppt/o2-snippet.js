@@ -45,14 +45,21 @@ O2Newchat.init = function()
         //ABC
         O2Newchat.isAbcRunning = true;
         var abcDiv = document.createElement("div");
+
+        // <div class="apple-business-chat-message-container"
+        //     data-apple-business-id="016d3cac-9192-46a7-ae3b-aadf348df717"
+        //     data-apple-icon-color="#ffffff"
+        //     data-apple-icon-background-color="#0090d0"
+        //     data-apple-icon-scale="1.5"
+        //     data-apple-business-intent-id="O2.CZ">
+        // </div>
+
         abcDiv.className += "apple-business-chat-message-container";
         abcDiv.setAttribute("data-apple-business-id", "6df1b88b-a132-4089-ae18-b0ed03e1de06");
-        abcDiv.setAttribute("data-apple-business-group-id", "SHOP");
-        abcDiv.setAttribute("data-apple-business-intent-id", "mluvii");
+        abcDiv.setAttribute("data-apple-business-intent-id", "O2.CZ");
         abcDiv.setAttribute("data-apple-icon-scale", "1.5");
         abcDiv.setAttribute("data-apple-icon-color", "#ffffff");
         abcDiv.setAttribute("data-apple-icon-background-color", "#0090d0");
-        abcDiv.setAttribute("data-apple-icon-title", "Otev\u0159\u00edt chat");
         
         document.getElementsByTagName("body")[0].appendChild( abcDiv );
     }
@@ -69,7 +76,7 @@ O2Newchat.setup = function()
         O2Newchat.initialized = true;
         O2Newchat.initializing = false;
         $owidget.addCustomData("Package","chatRESasistentPOPredesign");
-        $owidget.addCustomData("Titulek","Mobiln\u00ed tarify");
+        //$owidget.addCustomData("Titulek","Mobiln\u00ed tarify"); ---O2 uncomment this line in case of extra value for each page title---
     } else{
         console.log("Widget not initialized - waiting");
     }
