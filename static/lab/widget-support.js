@@ -1,6 +1,6 @@
 var widgetConfig = window.widgetConfig ||
 {
-    OWIDGET_BACKEND_URL: 'https://widgettest.o2.cz/be'
+    OWIDGET_BACKEND_URL: 'https://widgetlab.o2.cz/be'
 };
 
 var elemDiv = document.createElement('div');

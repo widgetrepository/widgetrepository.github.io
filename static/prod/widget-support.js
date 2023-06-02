@@ -9,7 +9,7 @@ elemDiv.innerHTML = `
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Windget DEMO support settings</h4>
+            <h4 class="modal-title">Windget TEST support settings</h4>
         </div>
         <div class="modal-body">
             <textarea class="widget-context" id="widgetSettingsContext" rows="5"></textarea>
