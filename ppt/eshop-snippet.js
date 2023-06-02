@@ -1,15 +1,17 @@
-var O2Newchat = window.O2Newchat ||
+var widgetConfig = window.widgetConfig ||
 {
 	initialized: false,
     initializing: false,
     isAbcRunning: false,
-    isWidgetRunning: false
+    isWidgetRunning: false,
+    OWIDGET_BACKEND_URL: 'https://widgetlab.o2.cz/be',
+    OWIDGET_URL: 'https://widgetlab.o2.cz'
 };
 
-O2Newchat.init = function()
+widgetConfig.init = function()
 {
     console.log("Widget initialization");
-    O2Newchat.initializing = true;
+    widgetConfig.initializing = true;
 
     //Apple business check
 	//pokud neni ABC tak se spusti
@@ -20,10 +22,10 @@ O2Newchat.init = function()
         )
 	{
         //Widget
-        O2Newchat.isWidgetRunning = true;
+        widgetConfig.isWidgetRunning = true;
 
         var wCss = document.createElement( "link" );
-        wCss.href = "https://widgetlab.o2.cz/assets/style.css";
+        wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
         wCss.type = "text/css";
         wCss.rel = "stylesheet";
         
@@ -35,13 +37,13 @@ O2Newchat.init = function()
             wJs.type = "module";
             wJs.crossOrigin = 'anonymous';
             wJs.charset = "UTF-8";
-            wJs.src = "https://widgetlab.o2.cz/assets/client.js";
+            wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
         document.getElementsByTagName("body")[0].appendChild( wJs );
 
-        O2Newchat.timer = setInterval(O2Newchat.setup, 250);
+        widgetConfig.timer = setInterval(widgetConfig.setup, 250);
     } else {
         //ABC
-        O2Newchat.isAbcRunning = true;
+        widgetConfig.isAbcRunning = true;
         var abcDiv = document.createElement("div");
 
         // <div class="apple-business-chat-message-container"
@@ -65,19 +67,20 @@ O2Newchat.init = function()
     
 }
 
-O2Newchat.setup = function()
+widgetConfig.setup = function()
 {
     console.log("Widget setup");
     if (typeof $owidget != "undefined"){
         //continue
         clearInterval(O2Newchat.timer);
-        O2Newchat.initialized = true;
-        O2Newchat.initializing = false;
-        $owidget.addCustomData("Package","chatRESeshop");
-        //$owidget.addCustomData("Titulek","Mobiln\u00ed tarify"); ---O2 uncomment this line in case of extra value for each page title---
+        widgetConfig.initialized = true;
+        widgetConfig.initializing = false;
+
+        $owidget.addCustomData("WDG_PACKAGE","chatRESeshop");
+        $owidget.addCustomData("WDG_PAGE_TITLE",document.title); //---O2 uncomment this line in case of extra value for each page title---
     } else{
         console.log("Widget not initialized - waiting");
     }
 }
 
-O2Newchat.init();
+widgetConfig.init();

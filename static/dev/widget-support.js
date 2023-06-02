@@ -1,3 +1,8 @@
+var widgetConfig = window.widgetConfig ||
+{
+    OWIDGET_BACKEND_URL: 'https://widget.o2.cz/be'
+};
+
 var elemDiv = document.createElement('div');
 elemDiv.id = 'widgetSettingsWindow';
 elemDiv.innerHTML = `
