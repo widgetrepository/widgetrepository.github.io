@@ -37,8 +37,6 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  
-  <link rel="stylesheet" href="https://widgetlab.o2.cz/assets/style.css" />
 
 
   <link href="widget-support.css" rel="stylesheet">
@@ -50,8 +48,37 @@
 </head>
 
 <body>
-  <script src="widget-support.js"></script>
-  <script type="module" crossorigin src="https://widgetlab.o2.cz/assets/client.js"></script>
+    <script src="widget-support.js"></script>
+    <script>
+      var widgetConfig = window.widgetConfig ||
+      {
+          OWIDGET_BACKEND_URL: 'https://widgetlab.o2.cz/be',
+          OWIDGET_URL: 'https://widgetlab.o2.cz'
+      };
+      
+      widgetConfig.init = function()
+      {
+          console.log("Widget initialization");
+          widgetConfig.isWidgetRunning = true;
+  
+          var wCss = document.createElement( "link" );
+          wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
+          wCss.type = "text/css";
+          wCss.rel = "stylesheet";
+          
+          document.getElementsByTagName("head")[0].appendChild( wCss );
+  
+          wJs = document.createElement("script");
+              wJs.type = "text/javascript";
+              wJs.async = !0;
+              wJs.type = "module";
+              wJs.crossOrigin = 'anonymous';
+              wJs.charset = "UTF-8";
+              wJs.src = widgetConfig.OWIDGET_URL + "/assets/agent.js";
+          document.getElementsByTagName("body")[0].appendChild( wJs );
+      }
+      widgetConfig.init();
+    </script>
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">
