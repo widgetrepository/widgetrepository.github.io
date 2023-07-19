@@ -4,8 +4,13 @@ var widgetConfig = window.widgetConfig ||
     initializing: false,
     isAbcRunning: false,
     isWidgetRunning: false,
-    OWIDGET_BACKEND_URL: 'https://widgetlab.o2.cz/be',
-    OWIDGET_URL: 'https://widgetlab.o2.cz'
+    counter: 0,
+    OWIDGET_BACKEND_URL: 'https://widgettest.o2.cz/be',
+    OWIDGET_URL: 'https://widgettest.o2.cz',
+    OWIDGET_SENTRY_DSN: 'https://74423cd1ac6a420ebd5ba8ee402fee6a@sentry.eman.dev/46',
+    OWIDGET_strGmsURL: 'https://chatlab.o2.cz/genesys/cometd',
+    OWIDGET_strServiceName: '/service/chatV2/cz',
+    OWIDGET_statApi: 'https://widgettest.o2.cz/api/state/identify'
 };
 
 widgetConfig.init = function()
@@ -15,7 +20,7 @@ widgetConfig.init = function()
 
     //Apple business check
     //var a = (new UAParser).getOS(); ---O2 uncomment this line ---
-	//pokud neni ABC tak se spusti
+	//pokud neni ABC tak se spusti - POZOR - nutno naloadovat js pro ABC check na strance - neni soucasti snippetu
 
 	if (!window.appleBusinessChat || 
         !appleBusinessChat.isSupported || 
@@ -43,18 +48,18 @@ widgetConfig.init = function()
         document.getElementsByTagName("body")[0].appendChild( wJs );
 
         widgetConfig.timer = setInterval(widgetConfig.setup, 250);
+
+        window.addEventListener(
+            "message",
+            (event) => {
+              console.log(event.data);
+            },
+            false,
+          );
     } else {
         //ABC
         widgetConfig.isAbcRunning = true;
         var abcDiv = document.createElement("div");
-
-        // <div class="apple-business-chat-message-container"
-        //     data-apple-business-id="016d3cac-9192-46a7-ae3b-aadf348df717"
-        //     data-apple-icon-color="#ffffff"
-        //     data-apple-icon-background-color="#0090d0"
-        //     data-apple-icon-scale="1.5"
-        //     data-apple-business-intent-id="O2.CZ">
-        // </div>
 
         abcDiv.className += "apple-business-chat-message-container";
         abcDiv.setAttribute("data-apple-business-id", "6df1b88b-a132-4089-ae18-b0ed03e1de06");
@@ -65,13 +70,19 @@ widgetConfig.init = function()
         
         document.getElementsByTagName("body")[0].appendChild( abcDiv );
     }
-
-    
 }
 
 widgetConfig.setup = function()
 {
     console.log("Widget setup");
+
+    widgetConfig.counter++;
+    if (widgetConfig.counter > 10)
+    {
+        console.log("Widget start timeouted");
+        clearInterval(widgetConfig.timer);
+    }
+
     if (typeof $owidget != "undefined"){
         //continue
         clearInterval(widgetConfig.timer);

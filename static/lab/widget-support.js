@@ -12,7 +12,11 @@ elemDiv.innerHTML = `
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button id="widgetSettingsSendNow" type="button" class="btn btn-primary">Send to widget NOW</button>
+            <button id="widgetSettingsSendNow" type="button" class="btn btn-primary">Send via owidget</button>
+            <button id="widgetSettingsSendNowPost" type="button" class="btn btn-primary">Send via postMessage</button>
+            <button id="widgetPostMessageStartChat" type="button" class="btn btn-primary">Start chat</button>
+            <button id="widgetPostMessageOpenWindow" type="button" class="btn btn-primary">Open Window</button>
+            <button id="widgetPostMessageGetState" type="button" class="btn btn-primary">Get state</button>
         </div>
     </div>
 </div>`;
@@ -29,6 +33,11 @@ $("#widgetSettingsSendNow").click(function(){
     SendDataToWidget(true);
 });
 
+//Manualne provolat widget a predat mu vsechna data z dialogu pres PostMessage
+$("#widgetSettingsSendNowPost").click(function(){
+    SendDataToWidgetPostMessage();
+});
+
 //Moznost menit pozici modalniho okna
 $("#widgetSettingsWindow").draggable({
     handle: ".modal-header"
@@ -36,6 +45,34 @@ $("#widgetSettingsWindow").draggable({
 
 //Automaticky zobrazit okno po nacteni stranky
 $('#widgetSettingsWindow').modal('show');
+
+$("#widgetPostMessageStartChat").click(function(){
+    postMessage({
+            "operation": "RequestWidgetStartChat",
+            "content": {
+                "reason": "ManuallyCalled",         
+                "kvps": {        
+                    "SAMPLE-KEY": "SAMPLE-VALUE"
+                }
+            } 
+        }, "*");
+});
+
+$("#widgetPostMessageOpenWindow").click(function(){
+    postMessage({
+        "operation": "RequestWidgetOpenWindow",
+        "content": {
+                "reason": "ManuallyCalled"
+        } 
+    }, "*");
+});
+
+$("#widgetPostMessageGetState").click(function(){
+    postMessage({
+        "operation": "RequestWidgetCurrentState",
+        "content": {} 
+    }, "*");
+});
 
 //nacteni obsahu z query stringu
 function populateModalWindow() {
@@ -81,6 +118,34 @@ function SendDataToWidget(manually){
         message.innerText = "Manually called";
 
     console.log($owidget.getAllData());
+    console.log("--------------------");
+}
+
+function SendDataToWidgetPostMessage(){
+    console.log("--- push data to widget via PostMessage ---");
+    const context = document.getElementById("widgetSettingsContext");
+    const message = document.getElementById("widgetSettingsMessage");
+
+    let values = context.value.split(/\r?\n/);
+    let valueMap = {};
+    values.map(sentence => {
+        let kvp = sentence.split('=');
+        if (!isEmpty(kvp[0]) && !isEmpty(kvp[1]))
+            valueMap[kvp[0]] = kvp[1];
+    });
+
+    const messageContent = {
+        "operation": "RequestWidgetSetCustomData",
+        "content": valueMap
+    };
+
+    postMessage(messageContent, "*");
+
+    message.innerText = "Manually called postMessage";
+
+    setTimeout(() => {
+        console.log($owidget.getAllData());
+      }, 100);
     console.log("--------------------");
 }
 

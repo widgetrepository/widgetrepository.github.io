@@ -79,6 +79,15 @@
               wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
           document.getElementsByTagName("body")[0].appendChild( wJs );
       }
+
+      window.addEventListener(
+            "message",
+            (event) => {
+              console.log(event.data);
+            },
+            false,
+          );
+          
       widgetConfig.init();
     </script>
 
