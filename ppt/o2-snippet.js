@@ -48,14 +48,6 @@ widgetConfig.init = function()
         document.getElementsByTagName("body")[0].appendChild( wJs );
 
         widgetConfig.timer = setInterval(widgetConfig.setup, 250);
-
-        window.addEventListener(
-            "message",
-            (event) => {
-              console.log(event.data);
-            },
-            false,
-          );
     } else {
         //ABC
         widgetConfig.isAbcRunning = true;
