@@ -10,7 +10,8 @@ var widgetConfig = window.widgetConfig ||
     OWIDGET_SENTRY_DSN: 'https://74423cd1ac6a420ebd5ba8ee402fee6a@sentry.eman.dev/46',
     OWIDGET_strGmsURL: 'https://chatlab.o2.cz/genesys/cometd',
     OWIDGET_strServiceName: '/service/chatV2/cz',
-    OWIDGET_statApi: 'https://widgettest.o2.cz/api/state/identify'
+    OWIDGET_statApi: 'https://widgettest.o2.cz/api/state/identify',
+    version: '1.0.1'
 };
 
 widgetConfig.init = function()
