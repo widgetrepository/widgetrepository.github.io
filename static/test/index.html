@@ -43,11 +43,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+  <script src="https://static.cdn-apple.com/businesschat/start-chat-button/2/index.js"></script>
+
 </head>
 
 <body>
   <script src="widget-support.js"></script>
       <script>
+
       var widgetConfig = window.widgetConfig ||
       {
           OWIDGET_BACKEND_URL: 'https://widgettest.o2.cz/be',
@@ -64,22 +67,40 @@
           console.log("Widget initialization");
           widgetConfig.isWidgetRunning = true;
   
-          var wCss = document.createElement( "link" );
-          wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
-          wCss.type = "text/css";
-          wCss.rel = "stylesheet";
-          
-          document.getElementsByTagName("head")[0].appendChild( wCss );
-  
-          wJs = document.createElement("script");
-              wJs.type = "text/javascript";
-              wJs.async = !0;
-              wJs.type = "module";
-              wJs.crossOrigin = 'anonymous';
-              wJs.charset = "UTF-8";
-              wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
-          document.getElementsByTagName("body")[0].appendChild( wJs );
-      }
+          if (!window.appleBusinessChat || 
+              !appleBusinessChat.isSupported || 
+              !appleBusinessChat.isSupported())
+          {
+            var wCss = document.createElement( "link" );
+            wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
+            wCss.type = "text/css";
+            wCss.rel = "stylesheet";
+            
+            document.getElementsByTagName("head")[0].appendChild( wCss );
+    
+            wJs = document.createElement("script");
+                wJs.type = "text/javascript";
+                wJs.async = !0;
+                wJs.type = "module";
+                wJs.crossOrigin = 'anonymous';
+                wJs.charset = "UTF-8";
+                wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
+            document.getElementsByTagName("body")[0].appendChild( wJs );
+            
+          } else { 
+            var abcDiv = document.createElement("div");
+
+            abcDiv.className += "apple-business-chat-message-container";
+            abcDiv.setAttribute("data-apple-business-id", "6df1b88b-a132-4089-ae18-b0ed03e1de06");
+            abcDiv.setAttribute("data-apple-business-intent-id", "O2.CZ");
+            abcDiv.setAttribute("data-apple-icon-scale", "1.5");
+            abcDiv.setAttribute("data-apple-icon-color", "#ffffff");
+            abcDiv.setAttribute("data-apple-icon-background-color", "#0090d0");
+            
+            document.getElementsByTagName("body")[0].appendChild( abcDiv );
+            window.appleBusinessChat.refresh();
+          }
+        }
 
       window.addEventListener(
             "message",
