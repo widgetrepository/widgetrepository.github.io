@@ -50,7 +50,7 @@
 <body>
     <script src="widget-support.js"></script>
     <script>
-      var widgetConfig = window.widgetConfig ||
+      window.widgetConfig = window.widgetConfig ||
       {
           OWIDGET_BACKEND_URL: 'https://widgetlab.o2.cz/be',
           OWIDGET_URL: 'https://widgetlab.o2.cz',
@@ -61,13 +61,13 @@
           version: '1.0.1'
       };
       
-      widgetConfig.init = function()
+      window.widgetConfig.init = function()
       {
           console.log("Widget initialization");
-          widgetConfig.isWidgetRunning = true;
+          window.widgetConfig.isWidgetRunning = true;
   
           var wCss = document.createElement( "link" );
-          wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
+          wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css";
           wCss.type = "text/css";
           wCss.rel = "stylesheet";
           
@@ -79,7 +79,7 @@
               wJs.type = "module";
               wJs.crossOrigin = 'anonymous';
               wJs.charset = "UTF-8";
-              wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
+              wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/client.js";
           document.getElementsByTagName("body")[0].appendChild( wJs );
       }
 
@@ -91,7 +91,7 @@
             false,
           );
 
-      widgetConfig.init();
+      window.widgetConfig.init();
     </script>
 
   <!-- ======= Header ======= -->

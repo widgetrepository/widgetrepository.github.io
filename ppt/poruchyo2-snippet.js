@@ -1,5 +1,5 @@
 
-var widgetConfig = window.widgetConfig ||
+window.widgetConfig = window.widgetConfig ||
 {
 	initialized: false,
     initializing: false,
@@ -16,18 +16,18 @@ var widgetConfig = window.widgetConfig ||
     version: '1.0.1'
 };
 
-widgetConfig.init = function(packageName)
+window.widgetConfig.init = function(packageName)
 {
     console.log("Widget initialization for : " + packageName);
-    widgetConfig.packageId = packageName;
+    window.widgetConfig.packageId = packageName;
 
-    widgetConfig.initializing = true;
+    window.widgetConfig.initializing = true;
 
     //Widget
-    widgetConfig.isWidgetRunning = true;
+    window.widgetConfig.isWidgetRunning = true;
 
     var wCss = document.createElement( "link" );
-    wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
+    wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css";
     wCss.type = "text/css";
     wCss.rel = "stylesheet";
     
@@ -39,10 +39,10 @@ widgetConfig.init = function(packageName)
         wJs.type = "module";
         wJs.crossOrigin = 'anonymous';
         wJs.charset = "UTF-8";
-        wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
+        wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/client.js";
     document.getElementsByTagName("body")[0].appendChild( wJs );
 
-    widgetConfig.timer = setInterval(widgetConfig.setup, 250);
+    window.widgetConfig.timer = setInterval(window.widgetConfig.setup, 250);
 
     window.addEventListener(
         "message",
@@ -53,25 +53,25 @@ widgetConfig.init = function(packageName)
         );
 }
 
-widgetConfig.setup = function()
+window.widgetConfig.setup = function()
 {
     console.log("Widget setup");
 
-    widgetConfig.counter++;
-    if (widgetConfig.counter > 10)
+    window.widgetConfig.counter++;
+    if (window.widgetConfig.counter > 10)
     {
         console.log("Widget start timeouted");
-        clearInterval(widgetConfig.timer);
+        clearInterval(window.widgetConfig.timer);
     }
 
     if (typeof $owidget != "undefined"){
         //continue
-        clearInterval(widgetConfig.timer);
-        widgetConfig.initialized = true;
-        widgetConfig.initializing = false;
+        clearInterval(window.widgetConfig.timer);
+        window.widgetConfig.initialized = true;
+        window.widgetConfig.initializing = false;
 
         
-        $owidget.addCustomData("WDG_PACKAGE", "PORUCHY_" + widgetConfig.packageId);
+        $owidget.addCustomData("WDG_PACKAGE", "PORUCHY_" + window.widgetConfig.packageId);
         $owidget.addCustomData("WDG_PAGE_TITLE",document.title); //---O2 uncomment this line in case of extra value for each page title---
     } else{
         console.log("Widget not initialized - waiting");
@@ -80,11 +80,11 @@ widgetConfig.setup = function()
 
 //--- for O2 Poruchy back compatibility ---
 var O2chat = window.O2chat || {}
-O2chat.residentTesu = function() {widgetConfig.init("residentTesu")}; // for example if you want this widget, cust call O2chat.residentTesu() in console or automatically via js
-O2chat.smbTesu = function() {widgetConfig.init("smbTesu")};
-O2chat.corpTesu = function() {widgetConfig.init("corpTesu")};
-O2chat.govTesu = function() {widgetConfig.init("govTesu")};
-O2chat.residentCare = function() {idgetConfig.init("residentCare")};
-O2chat.smbCare = function() {widgetConfig.init("smbCare")};
-O2chat.corpCare = function() {widgetConfig.init("corpCare")};
-O2chat.govCare = function() {widgetConfig.init("govCare")};
+O2chat.residentTesu = function() {window.widgetConfig.init("residentTesu")}; // for example if you want this widget, cust call O2chat.residentTesu() in console or automatically via js
+O2chat.smbTesu = function() {window.widgetConfig.init("smbTesu")};
+O2chat.corpTesu = function() {window.widgetConfig.init("corpTesu")};
+O2chat.govTesu = function() {window.widgetConfig.init("govTesu")};
+O2chat.residentCare = function() {window.widgetConfig.init("residentCare")};
+O2chat.smbCare = function() {window.widgetConfig.init("smbCare")};
+O2chat.corpCare = function() {window.widgetConfig.init("corpCare")};
+O2chat.govCare = function() {window.widgetConfig.init("govCare")};

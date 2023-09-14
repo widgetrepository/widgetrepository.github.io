@@ -1,4 +1,4 @@
-var widgetConfig = window.widgetConfig ||
+window.widgetConfig = window.widgetConfig ||
 {
 	initialized: false,
     initializing: false,
@@ -13,10 +13,10 @@ var widgetConfig = window.widgetConfig ||
     version: '1.0.1'
 };
 
-widgetConfig.init = function()
+window.widgetConfig.init = function()
 {
     console.log("Widget initialization");
-    widgetConfig.initializing = true;
+    window.widgetConfig.initializing = true;
 
     //Apple business check
 	//pokud neni ABC tak se spusti widget - POZOR - nutno naloadovat js ABC na strance - neni soucasti snippetu
@@ -27,10 +27,10 @@ widgetConfig.init = function()
         )
 	{
         //Widget
-        widgetConfig.isWidgetRunning = true;
+        window.widgetConfig.isWidgetRunning = true;
 
         var wCss = document.createElement( "link" );
-        wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
+        wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css";
         wCss.type = "text/css";
         wCss.rel = "stylesheet";
         
@@ -42,10 +42,10 @@ widgetConfig.init = function()
             wJs.type = "module";
             wJs.crossOrigin = 'anonymous';
             wJs.charset = "UTF-8";
-            wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
+            wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/client.js";
         document.getElementsByTagName("body")[0].appendChild( wJs );
 
-        widgetConfig.timer = setInterval(widgetConfig.setup, 250);
+        window.widgetConfig.timer = setInterval(window.widgetConfig.setup, 250);
 
         window.addEventListener(
             "message",
@@ -56,7 +56,7 @@ widgetConfig.init = function()
           );
     } else {
         //ABC
-        widgetConfig.isAbcRunning = true;
+        window.widgetConfig.isAbcRunning = true;
         var abcDiv = document.createElement("div");
 
         abcDiv.className += "apple-business-chat-message-container";
@@ -72,14 +72,14 @@ widgetConfig.init = function()
     
 }
 
-widgetConfig.setup = function()
+window.widgetConfig.setup = function()
 {
     console.log("Widget setup");
     if (typeof $owidget != "undefined"){
         //continue
         clearInterval(O2Newchat.timer);
-        widgetConfig.initialized = true;
-        widgetConfig.initializing = false;
+        window.widgetConfig.initialized = true;
+        window.widgetConfig.initializing = false;
 
         $owidget.addCustomData("WDG_PACKAGE","chatRESeshop");
         $owidget.addCustomData("WDG_PAGE_TITLE",document.title); //---O2 uncomment this line in case of extra value for each page title---
@@ -88,4 +88,4 @@ widgetConfig.setup = function()
     }
 }
 
-widgetConfig.init();
+window.widgetConfig.init();
