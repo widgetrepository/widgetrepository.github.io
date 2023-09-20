@@ -33,7 +33,7 @@ widgetConfig.init = function()
         widgetConfig.isWidgetRunning = true;
 
         var wCss = document.createElement( "link" );
-        wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css";
+        wCss.href = widgetConfig.OWIDGET_URL + "/assets/style.css?" + Math.random();
         wCss.type = "text/css";
         wCss.rel = "stylesheet";
         
@@ -45,7 +45,7 @@ widgetConfig.init = function()
             wJs.type = "module";
             wJs.crossOrigin = 'anonymous';
             wJs.charset = "UTF-8";
-            wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js";
+            wJs.src = widgetConfig.OWIDGET_URL + "/assets/client.js?" + Math.random();
         document.getElementsByTagName("body")[0].appendChild( wJs );
 
         widgetConfig.timer = setInterval(widgetConfig.setup, 250);

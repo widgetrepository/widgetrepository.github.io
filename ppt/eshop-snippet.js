@@ -30,7 +30,7 @@ window.widgetConfig.init = function()
         window.widgetConfig.isWidgetRunning = true;
 
         var wCss = document.createElement( "link" );
-        wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css";
+        wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css?" + Math.random();
         wCss.type = "text/css";
         wCss.rel = "stylesheet";
         
@@ -42,7 +42,7 @@ window.widgetConfig.init = function()
             wJs.type = "module";
             wJs.crossOrigin = 'anonymous';
             wJs.charset = "UTF-8";
-            wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/client.js";
+            wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/client.js?" + Math.random();
         document.getElementsByTagName("body")[0].appendChild( wJs );
 
         window.widgetConfig.timer = setInterval(window.widgetConfig.setup, 250);
