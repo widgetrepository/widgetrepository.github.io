@@ -9,6 +9,41 @@
     <title>Chat Widget</title>
   </head>
   <body>
-    <script type="module" crossorigin src="https://widgettest.o2.cz/assets/video.js"></script>
+    <script>
+      window.widgetConfig = window.widgetConfig ||
+      {
+          OWIDGET_BACKEND_URL: 'https://widgettest.o2.cz/be',
+          OWIDGET_URL: 'https://widgettest.o2.cz',
+          OWIDGET_SENTRY_DSN: 'https://74423cd1ac6a420ebd5ba8ee402fee6a@sentry.eman.dev/46',
+          OWIDGET_BACKEND_WEBSOCKET_URL: "https://widgettest.o2.cz",
+          OWIDGET_JANUS_URL: "wss://video-widgettest.o2.cz/ws",
+          version: '1.0.1'
+      };
+      
+      window.widgetConfig.init = function()
+      {
+          console.log("Widget initialization");
+          window.widgetConfig.isWidgetRunning = true;
+  
+          wJs = document.createElement("script");
+              wJs.type = "text/javascript";
+              wJs.async = !0;
+              wJs.type = "module";
+              wJs.crossOrigin = 'anonymous';
+              wJs.charset = "UTF-8";
+              wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/video.js?" + Math.random();
+          document.getElementsByTagName("body")[0].appendChild( wJs );
+      }
+
+      window.addEventListener(
+            "message",
+            (event) => {
+              console.log(event.data);
+            },
+            false,
+          );
+
+      window.widgetConfig.init();
+    </script>
   </body>
 </html>
