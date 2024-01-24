@@ -6,7 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0 maximum-scale=1"
     />
-    <title>Chat Widget</title>
+    <title>Agent's widget VIDEO</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
   </head>
   <body>
     <script>
@@ -18,7 +19,9 @@
           OWIDGET_BACKEND_WEBSOCKET_URL: "https://widgetlab.o2.cz",
           OWIDGET_JANUS_URL: "wss://video-widgetlab.o2.cz/ws",
           OWIDGET_STUNNER_URL: "turn:gateway-widgetlab.o2.cz:8445",
-          version: '1.0.1'
+          version: '1.0.1',
+          PERFTEST_SOCKET_URL: "https://widgetlab.o2.cz/v1/widget/video", //https://widgetlab.o2.cz/v1/widget/video
+          PERFTEST_SENDER: "agent"
       };
       
       window.widgetConfig.init = function()
@@ -34,16 +37,38 @@
               wJs.charset = "UTF-8";
               wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/video.js?" + Math.random();
           document.getElementsByTagName("body")[0].appendChild( wJs );
+
+          window.postMessage(
+            {
+              "sender":"WIDGET",
+              "operation": "WIDGET-LOADED"
+            },"*");
+
+          window.widgetConfig.timer = setInterval(window.widgetConfig.setup, 1000);
       }
 
-      window.addEventListener(
-            "message",
-            (event) => {
-              console.log(event.data);
-            },
-            false,
-          );
+      window.widgetConfig.setup = function(){
+        console.log("Widget setup");
+        if (window.WIDGET_VERSION != "undefined"){
+            clearInterval(window.widgetConfig.timer);
 
+            window.postMessage(
+                    {
+                      "sender":"WIDGET",
+                      "operation": "WIDGET-STARTED"
+                    },"*");
+        } else{
+            console.log("Widget not initialized - waiting");
+            window.postMessage(
+                    {
+                      "sender":"WIDGET",
+                      "operation": "WIDGET-STARTING"
+                    },"*");
+        }
+      }
+    </script>
+    <script src="widget-perftest-support.js"></script>
+    <script>
       window.widgetConfig.init();
     </script>
   </body>
