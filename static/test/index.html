@@ -71,9 +71,9 @@
           console.log("Widget initialization");
           window.widgetConfig.isWidgetRunning = true;
   
-          if (window.widgetConfig.ENABLEABC && (!window.appleBusinessChat || 
+          if (!window.appleBusinessChat || 
               !appleBusinessChat.isSupported || 
-              !appleBusinessChat.isSupported()))
+              !appleBusinessChat.isSupported())
           {
             var wCss = document.createElement( "link" );
             wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css?" + Math.random();
@@ -92,6 +92,25 @@
             document.getElementsByTagName("body")[0].appendChild( wJs );
             
           } else { 
+
+            if (!window.widgetConfig.ENABLEABC){
+                var wCss = document.createElement( "link" );
+                wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css?" + Math.random();
+                wCss.type = "text/css";
+                wCss.rel = "stylesheet";
+                
+                document.getElementsByTagName("head")[0].appendChild( wCss );
+        
+                wJs = document.createElement("script");
+                    wJs.type = "text/javascript";
+                    wJs.async = !0;
+                    wJs.type = "module";
+                    wJs.crossOrigin = 'anonymous';
+                    wJs.charset = "UTF-8";
+                    wJs.src = window.widgetConfig.OWIDGET_URL + "/assets/client.js?" + Math.random();
+                document.getElementsByTagName("body")[0].appendChild( wJs );
+            }
+
             var abcDiv = document.createElement("div");
 
             abcDiv.className += "apple-business-chat-message-container";
