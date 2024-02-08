@@ -48,10 +48,8 @@
 </head>
 
 <body>
-  <script src="widget-support.js"></script>
-      <script>
-
-      window.widgetConfig = window.widgetConfig ||
+  <script>
+    window.widgetConfig = window.widgetConfig ||
       {
           OWIDGET_BACKEND_URL: 'https://widgettest.o2.cz/be',
           OWIDGET_URL: 'https://widgettest.o2.cz',
@@ -62,17 +60,20 @@
           OWIDGET_strGmsURL: 'https://chatlab.o2.cz/genesys/cometd',
           OWIDGET_strServiceName: '/service/chatV2/cz',
           OWIDGET_statApi: 'https://widgettest.o2.cz/api/state/identify',
-          version: '1.0.1'
+          version: '1.0.1',
+          ENABLEABC: true
       };
-      
+  </script>
+  <script src="widget-support.js"></script>
+      <script>
       window.widgetConfig.init = function()
       {
           console.log("Widget initialization");
           window.widgetConfig.isWidgetRunning = true;
   
-          if (!window.appleBusinessChat || 
+          if (window.widgetConfig.ENABLEABC && (!window.appleBusinessChat || 
               !appleBusinessChat.isSupported || 
-              !appleBusinessChat.isSupported())
+              !appleBusinessChat.isSupported()))
           {
             var wCss = document.createElement( "link" );
             wCss.href = window.widgetConfig.OWIDGET_URL + "/assets/style.css?" + Math.random();

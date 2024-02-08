@@ -48,7 +48,6 @@
 </head>
 
 <body>
-    <script src="widget-support.js"></script>
     <script>
       window.widgetConfig = window.widgetConfig ||
       {
@@ -61,9 +60,15 @@
           OWIDGET_strGmsURL: 'https://chatlab.o2.cz/genesys/cometd',
           OWIDGET_strServiceName: '/service/chatV2/cz_dev',
           OWIDGET_statApi: 'https://widgettest.o2.cz/api/state/identify',
-          version: '1.0.1'
+          version: '1.0.1',
+          ENABLEABC: true
       };
-      
+    </script>
+
+    <script src="widget-support.js"></script>
+    
+    <script>
+
       window.widgetConfig.init = function()
       {
           console.log("Widget initialization");

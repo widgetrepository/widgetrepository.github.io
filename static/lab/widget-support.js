@@ -83,6 +83,9 @@ function populateModalWindow() {
     const message = document.getElementById("widgetSettingsMessage");
     context.value = "";
     for(var value of params.keys()) {
+        if (value === "ABCNO"){
+            window.widgetConfig.ENABLEABC = false;
+        }
         if (value === 'send2widgettimeout'){
             const timeout = params.get(value);
             if (timeout === 0){
